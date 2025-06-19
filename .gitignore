@@ -1,0 +1,9 @@
+# Ignore .venv
+.venv/
+
+# Ignore pycache
+__pycache__/
+*.py[cod]
+
+# Ignore vscode
+.vscode/
