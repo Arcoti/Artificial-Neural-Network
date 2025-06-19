@@ -1,7 +1,9 @@
 # Artificial-Neural-Network
-Artificial Neural Network (ANN) from scratch using Python and NumPy
+This project aims to create an Artificial Neural Network (ANN) from scratch which will be trained to identify handwritten numbers from the MNIST database. 
 
-This project aims to create an Artificial Neural Network (ANN) from scratch that learns to identify handwritten numbers. It will be created and trained from the MNIST Database. Ideally, there will be several layers, with the input layer having 784 neurons (28 by 28) and the output layer having 10 neurons. The hidden layers will have varying number of neurons but the tentative numbers are 128, 64 and 16 neurons. The Rectified Linear Unit (ReLU) will be used to produce a non linear function over the sigmoid function. 
+### Overview
+
+As a brief overview, the ANN of this project possess one input layer, two hidden layers and one output layers. Ideally, the input layer will have 784 neurons (28 by 28) and the output layer will have 10 neurons, one for each digit. The hidden layers will have varying number of neurons with 128 neurons for the first and 64 neurons for the second. To produce a non-linear function, the Rectified Linear Unit (ReLU) will be used over the sigmoid function. The ANN will basically adopt backpropagation to tune their weights and bias for each neuron to produce the ideal reasults. 
 
 ### Acknowledgements
 I would like to express my thanks to the following resources:
