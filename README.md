@@ -1,6 +1,8 @@
 # Artificial-Neural-Network
 Artificial Neural Network (ANN) from scratch using Python and NumPy
 
+This project aims to create an Artificial Neural Network (ANN) from scratch that learns to identify handwritten numbers. It will be created and trained from the MNIST Database. Ideally, there will be several layers, with the first having 784 neurons (28 by 28). 
+
 ### Acknowledgements
 I would like to express my thanks to the following resources:
 
