@@ -30,12 +30,13 @@ def forward_propagation(X: np.ndarray, params: dict):
     
     return A, caches
 
-def one_layer_propagation(dA, cache: tuple):
+def one_layer_back_propagation(dA, cache: tuple):
     linear_cache, activation_cache = cache
 
     # Assume g(x) = activation function
     # dZ = dA * g'(x)
     Z = activation_cache
+    # Chain Rule : Change cost w.r.t Z = Change cost w.r.t A * Change A w.r.t Z
     dZ = dA * ReLU_first_derivative(Z) 
 
     A_prev, W, b = linear_cache
@@ -50,6 +51,19 @@ def one_layer_propagation(dA, cache: tuple):
 def backward_propagation(AL, Y, caches):
     gradients = {}
     m = AL.shape[1]
+    L = len(caches)
     Y = Y.reshape(AL.shape)
 
     dAL = -(np.divide(Y, AL)) - np.divide(1-Y, 1-AL)
+
+    current_cache = caches[L - 1]
+    gradients['dA'+str(L-1)], gradients['dW'+str(L-1)], gradients['db'+str(L-1)] = one_layer_back_propagation(dAL, current_cache)
+
+    for l in reversed(range(L - 1)):
+        current_cache = caches[l]
+        dA_prev_temp, dW_temp, db_temp = one_layer_back_propagation(gradients['dA'+str(l+1)], current_cache)
+        gradients['dA' + str(l)] = dA_prev_temp
+        gradients['dW' + str(l + 1)] = dW_temp
+        gradients['db' + str(l + 1)] = db_temp
+    
+    return gradients

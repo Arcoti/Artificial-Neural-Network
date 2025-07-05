@@ -21,3 +21,12 @@ def initialize_parameters(layer_dims: list[int]):
         parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
 
     return parameters
+
+def update_parameters(parameters, gradients, learning_rate):
+    L = len(parameters) // 2
+
+    for l in range(1, L):
+        parameters['W' + str(l)] = parameters['W' + str(l)] - learning_rate * gradients['dW' + str(l)]
+        parameters['b' + str(l)] = parameters['b' + str(l)] - learning_rate * gradients['db' + str(l)]
+
+    return parameters
