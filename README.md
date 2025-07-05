@@ -25,7 +25,7 @@ python -m src.main
 
 ### Editing the Code
 
-1. Install packages
+Install packages
 ```
 pdm add <package-name>
 ```
