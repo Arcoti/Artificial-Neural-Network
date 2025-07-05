@@ -5,6 +5,31 @@ This project aims to create an Artificial Neural Network (ANN) from scratch whic
 
 As a brief overview, the ANN of this project possess one input layer, two hidden layers and one output layers. Ideally, the input layer will have 784 neurons (28 by 28) and the output layer will have 10 neurons, one for each digit. The hidden layers will have varying number of neurons with 128 neurons for the first and 64 neurons for the second. To produce a non-linear function, the Rectified Linear Unit (ReLU) will be used over the sigmoid function. The ANN will basically adopt backpropagation to tune their weights and bias for each neuron to produce the ideal reasults. 
 
+### Running and Installation
+
+1. Set up and activate the Python Virtual Environment
+```
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+2. Install dependencies
+```
+pdm sync
+```
+
+3. Run the code
+```
+python -m src.main
+```
+
+### Editing the Code
+
+1. Install packages
+```
+pdm add <package-name>
+```
+
 ### Acknowledgements
 I would like to express my thanks to the following resources:
 
