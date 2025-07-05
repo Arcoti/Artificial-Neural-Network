@@ -33,10 +33,7 @@ def forward_propagation(X: np.ndarray, params: dict):
 def one_layer_back_propagation(dA, cache: tuple):
     linear_cache, activation_cache = cache
 
-    # Assume g(x) = activation function
-    # dZ = dA * g'(x)
     Z = activation_cache
-    # Chain Rule : Change cost w.r.t Z = Change cost w.r.t A * Change A w.r.t Z
     dZ = dA * ReLU_first_derivative(Z) 
 
     A_prev, W, b = linear_cache
