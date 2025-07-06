@@ -10,5 +10,3 @@ def retrieve_mnist():
     print(len(ds_train), len(ds_test))
 
     return ds_train, ds_test
-
-retrieve_mnist()
