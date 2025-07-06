@@ -13,7 +13,12 @@ python -m venv .venv
 .venv\Scripts\activate
 ```
 
-2. Install dependencies
+2. Install pdm
+```
+pip install pdm
+```
+
+3. Install dependencies
 ```
 pdm sync
 ```
