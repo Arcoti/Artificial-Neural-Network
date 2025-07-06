@@ -7,3 +7,6 @@ __pycache__/
 
 # Ignore vscode
 .vscode/
+
+# Ignore .pdm-python
+.pdm-python
