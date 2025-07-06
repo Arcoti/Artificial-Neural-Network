@@ -7,10 +7,6 @@ def retrieve_mnist():
     ds_train = tfds.as_numpy(ds_train_raw)
     ds_test = tfds.as_numpy(ds_test_raw)
 
-    # ds_train = image, label
-    # image is 28 x 28 (one array is one pixel)
-    # label is the answer
-
     print(len(ds_train), len(ds_test))
 
     return ds_train, ds_test
