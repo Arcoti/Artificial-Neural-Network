@@ -8,12 +8,28 @@ def shuffle_and_batch(ds, batch_size: int = 32):
     np.random.shuffle(ds)
     
     # Batching
-    return [ds[start, start + batch_size] for start in range(0, ds.shape[0], batch_size)]
+    return np.array([ds[start, start + batch_size] for start in range(0, ds.shape[0], batch_size)])
 
 def flatten(ds):
     return np.array([(image.reshape(image.shape[0]*image.shape[1], 1), label) for image, label in ds])
 
+def separate(ds):
+    X = []
+    Y = []
+    for batch in ds:
+        batch_X = []
+        batch_Y = []
+        for image, label in batch:
+            batch_X.append(image)
+            batch_Y.append(label)
+
+        X.append(batch_X)
+        Y.append(batch_Y)
+    
+    return X, Y
+
 def clean(ds):
     normalized_ds = normalize(ds)
     flattened_ds = flatten(normalized_ds)
-    return shuffle_and_batch(flattened_ds)
+    batched_ds = shuffle_and_batch(flattened_ds)
+    return separate(batched_ds)
