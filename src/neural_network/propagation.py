@@ -47,7 +47,6 @@ def one_layer_back_propagation(dA, cache: tuple):
 
 def backward_propagation(AL, Y, caches):
     gradients = {}
-    m = AL.shape[1]
     L = len(caches)
     Y = Y.reshape(AL.shape)
 
