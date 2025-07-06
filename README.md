@@ -25,9 +25,15 @@ python -m src.main
 
 ### Editing the Code
 
-Install packages
+Install packages directly using pdm
 ```
 pdm add <package-name>
+```
+
+Or, install via pip and add them
+```
+pip install <package-name>
+pdm add requests <package-name>
 ```
 
 ### Acknowledgements
