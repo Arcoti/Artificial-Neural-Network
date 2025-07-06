@@ -13,20 +13,25 @@ def shuffle_and_batch(ds, batch_size: int = 32):
 def flatten(ds):
     return np.array([(image.reshape(image.shape[0]*image.shape[1], 1), label) for image, label in ds])
 
-def separate(ds):
+def separate(ds, label_size: int = 10):
     X = []
     Y = []
     for batch in ds:
         batch_X = []
         batch_Y = []
         for image, label in batch:
+            # Get X
             batch_X.append(image)
-            batch_Y.append(label)
+
+            # Get Y
+            one_hot = np.zeros(label_size) # 10 digits only
+            one_hot[label] = 1
+            batch_Y.append(one_hot)
 
         X.append(batch_X)
         Y.append(batch_Y)
     
-    return X, Y
+    return np.array(X), np.array(Y)
 
 def clean(ds):
     normalized_ds = normalize(ds)
