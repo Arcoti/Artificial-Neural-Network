@@ -1,3 +1,4 @@
+import numpy as np
 import tensorflow_datasets as tfds
 
 def retrieve_mnist():
@@ -6,7 +7,5 @@ def retrieve_mnist():
 
     ds_train = tfds.as_numpy(ds_train_raw)
     ds_test = tfds.as_numpy(ds_test_raw)
-
-    print(len(ds_train), len(ds_test))
 
     return ds_train, ds_test
