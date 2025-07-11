@@ -1,6 +1,6 @@
 import numpy as np
 
-def initialize_parameters(layer_dims: list[int]):
+def initialize_parameters(layer_dims: list[int], batch_size: int):
     """
     Initialize weights and biases for all the different layers
 
@@ -18,7 +18,7 @@ def initialize_parameters(layer_dims: list[int]):
     # Generate the weights (W) and biases (b)
     for l in range(1, len(layer_dims)):
         parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l - 1])*0.01
-        parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
+        parameters['b' + str(l)] = np.zeros((layer_dims[l], batch_size))
 
     return parameters
 
