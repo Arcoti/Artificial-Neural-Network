@@ -1,6 +1,6 @@
 import numpy as np
 
-from .function import ReLU, ReLU_first_derivative
+from .function import sigmoid, sigmoid_first_derivative
 
 def forward_propagation(X: np.ndarray, params: dict):
     # Define Local Variables
@@ -20,7 +20,7 @@ def forward_propagation(X: np.ndarray, params: dict):
         linear_cache = (A_prev, W, b)
 
         # Apply Activation Function
-        A = ReLU(Z)
+        A = sigmoid(Z)
 
         # Store Activation Cache
         activation_cache = Z
@@ -34,7 +34,7 @@ def one_layer_back_propagation(dA, cache: tuple):
     linear_cache, activation_cache = cache
 
     Z = activation_cache
-    dZ = dA * ReLU_first_derivative(Z) 
+    dZ = dA * sigmoid_first_derivative(Z) 
 
     A_prev, W, b = linear_cache
     m = A_prev.shape[1]
