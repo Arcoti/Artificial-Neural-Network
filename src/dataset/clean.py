@@ -13,7 +13,7 @@ def shuffle_and_batch(ds, batch_size):
 def flatten(ds):
     return [(image.reshape(image.shape[0]*image.shape[1]), label) for image, label in ds]
 
-def separate(ds, label_size: int, as_label: bool):
+def separate(ds, label_size: int):
     X = []
     Y = []
     for batch in ds:
@@ -24,20 +24,35 @@ def separate(ds, label_size: int, as_label: bool):
             batch_X.append(image)
 
             # Get Y
-            if as_label:
-                batch_Y.append(label)
-            else:
-                one_hot = np.zeros(label_size) # 10 digits only
-                one_hot[label] = 1
-                batch_Y.append(one_hot)
+            one_hot = np.zeros(label_size) # 10 digits only
+            one_hot[label] = 1
+            batch_Y.append(one_hot)
 
-        X.append(np.array(batch_X).T)
-        Y.append(np.array(batch_Y).T)
+        X.append(np.array(batch_X))
+        Y.append(np.array(batch_Y))
     
     return X, Y
 
-def clean(ds, as_label: bool = False, label_size: int = 10, batch_size: int = 32):
+def clean_train(ds, batch_size: int, label_size: int):
     flattened = flatten(ds)
     normalized = normalize(flattened)
     batched = shuffle_and_batch(normalized, batch_size)
-    return separate(batched, label_size, as_label)
+    return separate(batched, label_size)
+
+def clean_test(ds, batch_size: int):
+    flattened = flatten(ds)
+    normalized = normalize(flattened)
+    batched = shuffle_and_batch(normalized, batch_size)
+
+    X = []
+    Y = []
+
+    for batch in batched:
+        images = []
+        labels = []
+        for image, label in batch:
+            images.append(image)
+            labels.append(label)
+        X.append(np.array(images))
+        Y.append(np.array(labels))
+    return X, Y
