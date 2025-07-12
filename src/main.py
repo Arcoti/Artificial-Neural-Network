@@ -13,10 +13,8 @@ def main():
     x_test, y_test = clean_test(ds_test, BATCH_SIZE)
 
     parameters, cost_history = train(x_train, y_train, DIMENSIONS, EPOCHS, LEARNING_RATE)
-    print(parameters)
-
     accuracy_score = test(x_test, y_test, parameters)
-    print(accuracy_score)
+    return accuracy_score
 
 if __name__ == "__main__":
-    main()
+    print(main())
