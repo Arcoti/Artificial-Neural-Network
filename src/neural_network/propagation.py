@@ -14,7 +14,7 @@ def forward_propagation(X: np.ndarray, params: dict):
         b = params['b'+str(l)]
 
         # Linear Hypothesis
-        Z = np.dot(W, A_prev) + b
+        Z = np.dot(A_prev, W) + b
 
         # Store Linear Cache
         linear_cache = (A_prev, W, b)
@@ -39,9 +39,10 @@ def one_layer_back_propagation(dA, cache: tuple):
     A_prev, W, b = linear_cache
     m = A_prev.shape[1]
 
-    dW = (1 / m) * np.dot(dZ, A_prev.T)
-    db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
-    dA_prev = np.dot(W.T, dZ)
+    dW = (1 / m) * np.dot(A_prev.T, dZ)
+    db = (1 / m) * np.sum(dZ, axis=0, keepdims=True)
+    db = db.reshape(db.shape[1],)
+    dA_prev = np.dot(dZ, W.T)
 
     return dA_prev, dW, db
 

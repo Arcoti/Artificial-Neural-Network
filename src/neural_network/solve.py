@@ -6,4 +6,4 @@ def solve(X, parameters):
     return interpret(A)
 
 def interpret(A):
-    return np.array([np.argmax(case)] for case in A)
+    return np.array([[np.argmax(case)] for case in A.T])
