@@ -1,12 +1,16 @@
 import numpy as np
-
 from .solve import solve
+from .persist import load_model
 
-# Y here is simply the labels
-def test(X, Y, parameters):
+def test(X: list, Y: list, model_path: str):
+    # Initialize Variables
     total_correct = 0
     total_predictions = 0
 
+    # Load the parameters
+    parameters = load_model(model_path)
+
+    # Test in batches
     for batch_X, batch_Y in zip(X, Y):
         # Solve
         results = solve(batch_X, parameters)
