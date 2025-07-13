@@ -43,7 +43,7 @@ def one_layer_back_propagation(dA, cache: tuple, output_layer: bool):
         dZ = dA
 
     A_prev, W, b = linear_cache
-    m = A_prev.shape[1]
+    m = A_prev.shape[0]
 
     dW = (1 / m) * np.dot(A_prev.T, dZ)
     db = (1 / m) * np.sum(dZ, axis=0, keepdims=True)

@@ -4,10 +4,11 @@ def ReLU(Z):
     return np.maximum(Z, 0)
 
 def ReLU_first_derivative(Z: np.ndarray):
-    return (Z > 0).astype(int)
+    return (Z > 0).astype(float)
 
 def softmax(Z):
-    return np.exp(Z) / sum(np.exp(Z))
+    exp_shifted = np.exp(Z - np.max(Z, axis=1, keepdims=True))
+    return exp_shifted / np.sum(exp_shifted, axis=1, keepdims=True)
 
 def sigmoid(Z):
     return 1 / (1 + np.exp(np.dot(-1, Z)))
