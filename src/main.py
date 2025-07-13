@@ -1,50 +1,79 @@
-import matplotlib.pyplot as plt
+import numpy as np
+
 from .neural_network import *
 from .dataset import *
+from .utils import learning_rate_finder, plot
 
 LABEL_SIZE = 10
 BATCH_SIZE = 32
-EPOCH = 40
-LEARNING_RATE = 0.55
+EPOCH = 200
+LEARNING_RATE = 0.1
 DIMENSIONS = [784, 128, 64, 10]
 MODEL_PATH = './src/neural_network/params.pkl'
 
-learning_rates = [0.1, 0.01]
-epochs = range(2, 16)
+def find_learning_rate():
+    losses = []
+    learning_rates = []
+    total = 100
+
+    # Load Datasets
+    ds_train, ds_test = retrieve_mnist()
+    x_train, y_train = clean_train(ds_train, BATCH_SIZE, LABEL_SIZE)
+
+    for step in range(0, total):
+        # Find the learning rate
+        learning_rate = learning_rate_finder(step, total, end=10)
+
+        # Train the model
+        cost_history = train(x_train, y_train, DIMENSIONS, EPOCH, learning_rate, MODEL_PATH, False, True)
+        mean_loss = np.mean(cost_history)
+
+        # Log
+        print(f"Learning Rate - {learning_rate}: {mean_loss}")
+
+        # Record for plotting
+        learning_rates.append(learning_rate)
+        losses.append(mean_loss)
+
+    plot(learning_rates, losses, "Learning Rates", "Losses", "Losses against Learning Rates")
+
+def find_epoch():
+    losses = []
+
+    # Load Datasets
+    ds_train, ds_test = retrieve_mnist()
+    x_train, y_train = clean_train(ds_train, BATCH_SIZE, LABEL_SIZE)
+
+    for epoch in range(10, 210, 10):
+        # Train the model
+        cost_history = train(x_train, y_train, DIMENSIONS, epoch, LEARNING_RATE, MODEL_PATH, False, True)
+        mean_loss = np.mean(cost_history)
+
+        # Log
+        print(f"Epoch - {epoch}: {mean_loss}")
+
+        # Record for plotting
+        losses.append(mean_loss)
+
+    epochs = range(10, 210, 10)
+    plot(epochs, losses, "Epochs", "Losses", "Losses against Epoch @ 0.1 Learning Rate")
 
 def main():
-    accuracy_scores = []
-
     # Load Datasets
     ds_train, ds_test = retrieve_mnist()
     x_train, y_train = clean_train(ds_train, BATCH_SIZE, LABEL_SIZE)
     x_test, y_test = clean_test(ds_test, BATCH_SIZE)
 
-    for learning_rate in learning_rates:
-        temp = []
+    # Train the model
+    train(x_train, y_train, DIMENSIONS, EPOCH, LEARNING_RATE, MODEL_PATH, False, True)
 
-        for epoch in epochs:
-            train(x_train, y_train, DIMENSIONS, epoch, learning_rate, MODEL_PATH, True, False)
-            accuracy_score = test(x_test, y_test, MODEL_PATH)
+    # Test the model
+    accuracy_score = test(x_test, y_test, MODEL_PATH)
 
-            print(f"Epoch - {epoch}, Learning Rate - {learning_rate}: {accuracy_score}")
+    # Log
+    print(f"{accuracy_score}")
 
-            temp.append(accuracy_score)
-
-        accuracy_scores.append(temp)
-
-    return accuracy_scores
-
-def plot(accuracy_scores):
-    for learning_rate, accuracy_score in zip(learning_rates, accuracy_scores):
-
-        plt.figure(figsize=(8, 5))
-        plt.plot(epochs, accuracy_score)
-        plt.xlabel('Epochs')
-        plt.ylabel('Accuracy')
-        plt.title(f'Accuracy Fine Tuning against Epochs @ {learning_rate} learning rate')
-        plt.show()
+    return accuracy_score
 
 if __name__ == "__main__":
-    scores = main()
-    plot(scores)
+    score = main()
