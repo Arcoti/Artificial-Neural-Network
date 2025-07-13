@@ -4,11 +4,11 @@ from .dataset import *
 
 LABEL_SIZE = 10
 BATCH_SIZE = 32
-EPOCHS = 6
-LEARNING_RATE = 0.01
+EPOCHS = 15
+LEARNING_RATE = 0.1
 DIMENSIONS = [784, 128, 64, 10]
 
-learning_rates = [0.001, 0.0001, 0.00001]
+learning_rates = [0.12, 0.1, 0.08]
 epochs = range(10, 110, 10)
 
 def main():
