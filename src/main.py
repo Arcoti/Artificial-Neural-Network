@@ -58,6 +58,19 @@ def find_epoch():
     epochs = range(10, 210, 10)
     plot(epochs, losses, "Epochs", "Losses", "Losses against Epoch @ 0.1 Learning Rate")
 
+def find_stability():
+    # Load Datasets
+    ds_train, ds_test = retrieve_mnist()
+    x_train, y_train = clean_train(ds_train, BATCH_SIZE, LABEL_SIZE)
+
+    # Train the model
+    cost_history = train(x_train, y_train, DIMENSIONS, EPOCH, LEARNING_RATE, MODEL_PATH, False, False)
+
+    cost_history_per_epochs = [np.mean(np.array(cost_history[start: start + len(ds_train) // BATCH_SIZE])) for start in range(0, len(cost_history), len(ds_train) // BATCH_SIZE)]
+    epochs = range(0, EPOCH)
+
+    plot(epochs, cost_history_per_epochs, "Epochs", "Cost History", "Cost History against Epochs")
+
 def main():
     # Load Datasets
     ds_train, ds_test = retrieve_mnist()
