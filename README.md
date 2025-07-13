@@ -15,7 +15,7 @@ To determine the ideal epochs, a graph of loss against epochs at 0.1 learning ra
 
 The [stored model](./src/neural_network/params.pkl) is trained with a learning rate of 0.1, 200 epochs and batch size of 32. It is recorded to have a test accuracy score of 0.9765 when tested with a test dataset. 
 
-A graph of how the model's losses improves after 20 epochs of training data is show below. This implies that the model is learning well. 
+A graph of how the model's losses improves after 20 epochs of training data is show below. 
 
 ![Graph of Loss against Epochs @ 0.1 Learning Rate for 20 Epochs](./static/Graph%20-%20Loss%20History%20vs%20Epochs%20@%200.01%20Learning%20Rate%20and%2020%20Epochs.png)
 
