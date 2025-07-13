@@ -1,3 +1,4 @@
+import numpy as np
 from .function import cost_function
 from .params import initialize_parameters, update_parameters
 from .propagation import forward_propagation, backward_propagation

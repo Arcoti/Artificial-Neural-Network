@@ -1,6 +1,6 @@
 import numpy as np
 
-from .function import sigmoid, sigmoid_first_derivative
+from .function import ReLU, ReLU_first_derivative, softmax
 
 def forward_propagation(X: np.ndarray, params: dict):
     # Define Local Variables
@@ -20,7 +20,10 @@ def forward_propagation(X: np.ndarray, params: dict):
         linear_cache = (A_prev, W, b)
 
         # Apply Activation Function
-        A = sigmoid(Z)
+        if l == len(params) // 2:
+            A = softmax(Z)
+        else:
+            A = ReLU(Z)
 
         # Store Activation Cache
         activation_cache = Z
@@ -30,11 +33,14 @@ def forward_propagation(X: np.ndarray, params: dict):
     
     return A, caches
 
-def one_layer_back_propagation(dA, cache: tuple):
+def one_layer_back_propagation(dA, cache: tuple, output_layer: bool):
     linear_cache, activation_cache = cache
 
-    Z = activation_cache
-    dZ = dA * sigmoid_first_derivative(Z) 
+    if not output_layer:
+        Z = activation_cache
+        dZ = dA * ReLU_first_derivative(Z) 
+    else:
+        dZ = dA
 
     A_prev, W, b = linear_cache
     m = A_prev.shape[1]
@@ -51,14 +57,14 @@ def backward_propagation(AL, Y, caches):
     L = len(caches)
     Y = Y.reshape(AL.shape)
 
-    dAL = -(np.divide(Y, AL)) - np.divide(1-Y, 1-AL)
+    dAL = AL - Y
 
     current_cache = caches[L - 1]
-    gradients['dA'+str(L-1)], gradients['dW'+str(L-1)], gradients['db'+str(L-1)] = one_layer_back_propagation(dAL, current_cache)
+    gradients['dA'+str(L-1)], gradients['dW'+str(L-1)], gradients['db'+str(L-1)] = one_layer_back_propagation(dAL, current_cache, True)
 
     for l in reversed(range(L - 1)):
         current_cache = caches[l]
-        dA_prev_temp, dW_temp, db_temp = one_layer_back_propagation(gradients['dA'+str(l+1)], current_cache)
+        dA_prev_temp, dW_temp, db_temp = one_layer_back_propagation(gradients['dA'+str(l+1)], current_cache, False)
         gradients['dA' + str(l)] = dA_prev_temp
         gradients['dW' + str(l + 1)] = dW_temp
         gradients['db' + str(l + 1)] = db_temp
