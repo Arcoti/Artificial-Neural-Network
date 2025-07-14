@@ -1,5 +1,5 @@
 # Artificial-Neural-Network
-This project aims to create an Artificial Neural Network (ANN) from scratch which will be trained to identify handwritten numbers from the MNIST database. 
+This project aims to create an Artificial Neural Network (ANN) from scratch which will be trained to identify handwritten numbers from the MNIST database. As an extension, the program is also able to take in an image and provide its prediction. 
 
 ### Overview
 
@@ -19,7 +19,7 @@ A graph of how the model's losses improves after 20 epochs of training data is s
 
 ![Graph of Loss against Epochs @ 0.1 Learning Rate for 20 Epochs](./static/Graph%20-%20Loss%20History%20vs%20Epochs%20@%200.01%20Learning%20Rate%20and%2020%20Epochs.png)
 
-For future extension, can try to make the model clean raw input data like an image, turn it into greyscale and pass it into the model for analysis. 
+As an extension, the program can take in a [raw input image](./static/Sample_1.png) and accurately provide predictions on its digits. 
 
 ### Running and Installation
 
