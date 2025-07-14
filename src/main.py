@@ -3,6 +3,7 @@ import numpy as np
 from .neural_network import *
 from .dataset import *
 from .utils import learning_rate_finder, plot
+from .input.image import convert
 
 LABEL_SIZE = 10
 BATCH_SIZE = 32
@@ -10,6 +11,7 @@ EPOCH = 200
 LEARNING_RATE = 0.1
 DIMENSIONS = [784, 128, 64, 10]
 MODEL_PATH = './src/neural_network/params.pkl'
+IMAGE_PATH = './static/Sample_1.png'
 
 def find_learning_rate():
     losses = []
@@ -71,7 +73,7 @@ def find_stability():
 
     plot(epochs, cost_history_per_epochs, "Epochs", "Cost History", "Cost History against Epochs")
 
-def main():
+def train_and_test():
     # Load Datasets
     ds_train, ds_test = retrieve_mnist()
     x_train, y_train = clean_train(ds_train, BATCH_SIZE, LABEL_SIZE)
@@ -83,10 +85,12 @@ def main():
     # Test the model
     accuracy_score = test(x_test, y_test, MODEL_PATH)
 
-    # Log
-    print(f"{accuracy_score}")
-
     return accuracy_score
 
+def main():
+    input = convert(IMAGE_PATH)
+    return predict(input, MODEL_PATH)
+
 if __name__ == "__main__":
-    score = main()
+    prediction = main()
+    print(prediction)
